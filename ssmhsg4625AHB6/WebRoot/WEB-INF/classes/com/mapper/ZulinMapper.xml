@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.ZulinMapper">
+  <resultMap id="BaseResultMap" type="com.entity.Zulin">
+    <id column="id" jdbcType="INTEGER" property="id" />
+	<result column="cheliangbianhao" jdbcType="VARCHAR" property="cheliangbianhao" />
+    <result column="cheliangmingcheng" jdbcType="VARCHAR" property="cheliangmingcheng" />
+    <result column="leixing" jdbcType="VARCHAR" property="leixing" />
+    <result column="chepaihao" jdbcType="VARCHAR" property="chepaihao" />
+    <result column="rizujia" jdbcType="VARCHAR" property="rizujia" />
+    <result column="zulintianshu" jdbcType="VARCHAR" property="zulintianshu" />
+    <result column="zongjia" jdbcType="VARCHAR" property="zongjia" />
+    <result column="zulinren" jdbcType="VARCHAR" property="zulinren" />
+    <result column="issh" jdbcType="VARCHAR" property="issh" />
+	<result column="iszf" jdbcType="VARCHAR" property="iszf" />
+    
+    <result column="addtime" jdbcType="VARCHAR" property="addtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, cheliangbianhao,cheliangmingcheng,leixing,chepaihao,rizujia,zulintianshu,zongjia,zulinren,issh, iszf,addtime
+  </sql>
+  <select id="quchongZulin"  parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from zulin 
+    where zulinren = #{zulinren,jdbcType=VARCHAR} limit 0,1
+  </select>
+ <select id="getCount"   resultType="int" parameterType="java.util.Map" >
+    select  count(*) from zulin  where 1=1
+    <if test="cheliangbianhao!=null">and cheliangbianhao like  concat('%',#{cheliangbianhao,jdbcType=VARCHAR},'%')</if>
+     <if test="cheliangmingcheng!=null">and cheliangmingcheng like  concat('%',#{cheliangmingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="leixing!=null">and leixing like  concat('%',#{leixing,jdbcType=VARCHAR},'%')</if>
+     <if test="chepaihao!=null">and chepaihao like  concat('%',#{chepaihao,jdbcType=VARCHAR},'%')</if>
+     <if test="rizujia!=null">and rizujia like  concat('%',#{rizujia,jdbcType=VARCHAR},'%')</if>
+     <if test="zulintianshu1!=null">and zulintianshu &gt;=  concat('',#{zulintianshu1,jdbcType=VARCHAR},'')</if>
+     <if test="zulintianshu2!=null">and zulintianshu &lt;=  concat('',#{zulintianshu2,jdbcType=VARCHAR},'')</if>
+     <if test="zongjia!=null">and zongjia like  concat('%',#{zongjia,jdbcType=VARCHAR},'%')</if>
+     <if test="zulinren!=null">and zulinren like  concat('%',#{zulinren,jdbcType=VARCHAR},'%')</if>
+     
+  </select> 
+  <select id="getAll"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zulin  where 1=1
+    <if test="zulinren!=null">
+    and zulinren =#{zulinren}
+    </if>
+  </select>
+  
+  <select id="getsyzulin1"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zulin  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyzulin2"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zulin  where 1=1
+    limit 0,5
+  </select>
+  <select id="getsyzulin3"   resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select   <include refid="Base_Column_List" /> from zulin  where 1=1
+    limit 0,5
+  </select>
+  
+   <select id="getByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+     select  <include refid="Base_Column_List" /> 
+     from zulin where 1=1 
+     <if test="cheliangbianhao!=null">and cheliangbianhao like  concat('%',#{cheliangbianhao,jdbcType=VARCHAR},'%')</if>
+     <if test="cheliangmingcheng!=null">and cheliangmingcheng like  concat('%',#{cheliangmingcheng,jdbcType=VARCHAR},'%')</if>
+     <if test="leixing!=null">and leixing like  concat('%',#{leixing,jdbcType=VARCHAR},'%')</if>
+     <if test="chepaihao!=null">and chepaihao like  concat('%',#{chepaihao,jdbcType=VARCHAR},'%')</if>
+     <if test="rizujia!=null">and rizujia like  concat('%',#{rizujia,jdbcType=VARCHAR},'%')</if>
+     <if test="zulintianshu1!=null">and zulintianshu &gt;=  concat('',#{zulintianshu1,jdbcType=VARCHAR},'')</if>
+     <if test="zulintianshu2!=null">and zulintianshu &lt;=  concat('',#{zulintianshu2,jdbcType=VARCHAR},'')</if>
+     <if test="zongjia!=null">and zongjia like  concat('%',#{zongjia,jdbcType=VARCHAR},'%')</if>
+     <if test="zulinren!=null">and zulinren like  concat('%',#{zulinren,jdbcType=VARCHAR},'%')</if>
+     
+	 order by id desc
+     <if test="pageno!=null and pageSize!=null">
+     limit #{pageno},#{pageSize}
+     </if>
+     </select>
+	 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from zulin
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from zulin
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.Zulin">
+    insert into zulin (id, cheliangbianhao,cheliangmingcheng,leixing,chepaihao,rizujia,zulintianshu,zongjia,zulinren, addtime)
+    values (#{id,jdbcType=INTEGER}, #{cheliangbianhao,jdbcType=VARCHAR},#{cheliangmingcheng,jdbcType=VARCHAR},#{leixing,jdbcType=VARCHAR},#{chepaihao,jdbcType=VARCHAR},#{rizujia,jdbcType=VARCHAR},#{zulintianshu,jdbcType=VARCHAR},#{zongjia,jdbcType=VARCHAR},#{zulinren,jdbcType=VARCHAR}, #{addtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.entity.Zulin">
+    insert into zulin
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cheliangbianhao != null"> cheliangbianhao, </if>
+      <if test="cheliangmingcheng != null"> cheliangmingcheng, </if>
+      <if test="leixing != null"> leixing, </if>
+      <if test="chepaihao != null"> chepaihao, </if>
+      <if test="rizujia != null"> rizujia, </if>
+      <if test="zulintianshu != null"> zulintianshu, </if>
+      <if test="zongjia != null"> zongjia, </if>
+      <if test="zulinren != null"> zulinren, </if>
+      
+      <if test="addtime != null">
+        addtime,
+      </if>
+      
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cheliangbianhao != null"> #{cheliangbianhao,jdbcType=VARCHAR},</if>
+      <if test="cheliangmingcheng != null"> #{cheliangmingcheng,jdbcType=VARCHAR},</if>
+      <if test="leixing != null"> #{leixing,jdbcType=VARCHAR},</if>
+      <if test="chepaihao != null"> #{chepaihao,jdbcType=VARCHAR},</if>
+      <if test="rizujia != null"> #{rizujia,jdbcType=VARCHAR},</if>
+      <if test="zulintianshu != null"> #{zulintianshu,jdbcType=VARCHAR},</if>
+      <if test="zongjia != null"> #{zongjia,jdbcType=VARCHAR},</if>
+      <if test="zulinren != null"> #{zulinren,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        #{addtime,jdbcType=VARCHAR},
+      </if>
+      
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.entity.Zulin">
+    update zulin
+    <set>
+	  <if test="cheliangbianhao != null"> cheliangbianhao = #{cheliangbianhao,jdbcType=VARCHAR},</if>
+      <if test="cheliangmingcheng != null"> cheliangmingcheng = #{cheliangmingcheng,jdbcType=VARCHAR},</if>
+      <if test="leixing != null"> leixing = #{leixing,jdbcType=VARCHAR},</if>
+      <if test="chepaihao != null"> chepaihao = #{chepaihao,jdbcType=VARCHAR},</if>
+      <if test="rizujia != null"> rizujia = #{rizujia,jdbcType=VARCHAR},</if>
+      <if test="zulintianshu != null"> zulintianshu = #{zulintianshu,jdbcType=VARCHAR},</if>
+      <if test="zongjia != null"> zongjia = #{zongjia,jdbcType=VARCHAR},</if>
+      <if test="zulinren != null"> zulinren = #{zulinren,jdbcType=VARCHAR},</if>
+      
+      <if test="addtime != null">
+        addtime = #{addtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+  
+  <update id="updateByPrimaryKey" parameterType="com.entity.Zulin">
+    update zulin
+    set cheliangbianhao = #{cheliangbianhao,jdbcType=VARCHAR},cheliangmingcheng = #{cheliangmingcheng,jdbcType=VARCHAR},leixing = #{leixing,jdbcType=VARCHAR},chepaihao = #{chepaihao,jdbcType=VARCHAR},rizujia = #{rizujia,jdbcType=VARCHAR},zulintianshu = #{zulintianshu,jdbcType=VARCHAR},zongjia = #{zongjia,jdbcType=VARCHAR},zulinren = #{zulinren,jdbcType=VARCHAR},  addtime = #{addtime,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
